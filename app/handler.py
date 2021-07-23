@@ -5,7 +5,7 @@ import os
 import ast
 import torch
 import transformers
-from transformers import AutoTokenizer,AutoModelForQuestionAnswering, pipeline
+from transformers import pipeline
 from ts.torch_handler.base_handler import BaseHandler
 
 logger = logging.getLogger(__name__)
@@ -61,7 +61,7 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             if isinstance(input_text, (bytes, bytearray)):
                 input_text = input_text.decode('utf-8')
 
-            logger.info("Received text: '%s'", input_text)
+            logger.info("Received text: '%s'", input_text) 
 
             question_context = ast.literal_eval(input_text)
 
