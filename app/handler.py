@@ -31,22 +31,7 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
         """
         self.manifest = ctx.manifest
         properties = ctx.system_properties
-        model_dir = properties.get("model_dir")
-        serialized_file = self.manifest["model"]["serializedFile"]
-        model_pt_path = os.path.join(model_dir, serialized_file)
-
-        self.device = torch.device(
-            "cuda:" + str(properties.get("gpu_id"))
-            if torch.cuda.is_available() and properties.get("gpu_id") is not None
-            else "cpu"
-        )
-        # read configs for the mode, model_name, etc. from setup_config.json
-        setup_config_path = os.path.join(model_dir, "setup_config.json")
-        if os.path.isfile(setup_config_path):
-            with open(setup_config_path) as setup_config_file:
-                self.setup_config = json.load(setup_config_file)
-        else:
-            logger.warning("Missing the setup_config.json file.")
+        self.device = torch.device("cuda:" + str(properties.get("gpu_id")) if torch.cuda.is_available() else "cpu")
 
         # download model pipeline
         self.model = pipeline(
@@ -55,9 +40,6 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             tokenizer="mrm8488/bert-tiny-finetuned-squadv2"
         )
 
-        logger.info(
-            "Transformer model from path %s loaded successfully", model_dir
-        )
         self.initialized = True
 
 
