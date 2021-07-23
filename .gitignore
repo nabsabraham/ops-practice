@@ -1,0 +1,10 @@
+env/*
+logs/*
+Transformer_model/*
+*__pycache__/
+*/*
+model_store/*
+*.jpg
+*/*.mar
+model_store/BERTQA.mar
+model/*
