@@ -169,6 +169,7 @@ class TransformersSeqClassifierHandler(BaseHandler, ABC):
             logger.info(f' answer end: {answer_end}')
             answer_tokens = self.tokenizer.convert_ids_to_tokens(input_ids_batch[i].tolist()[answer_start:answer_end])
             prediction = self.tokenizer.convert_tokens_to_string(answer_tokens)
+            
             inferences.append(prediction)
 
 
